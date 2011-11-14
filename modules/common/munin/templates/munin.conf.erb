@@ -1,0 +1,5 @@
+<%- servers.each do |server| %>
+[<%= server['name'] %>]
+    address <%= server['ip'] %>
+    use_node_name yes
+<%- end %>

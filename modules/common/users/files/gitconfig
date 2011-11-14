@@ -1,0 +1,10 @@
+[color]
+  status = auto
+  diff = auto
+  branch = auto
+[alias]
+  st = status
+  ci = commit
+  staged = diff --cached
+[format]
+  pretty=format:%C(yellow)%h%Creset -%C(red)%d%Creset %s %Cgreen(%ar) %C(bold blue)<%an>%Creset

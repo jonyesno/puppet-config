@@ -1,0 +1,52 @@
+# <%= host['name'] %> (<%= host['ip'] %>)
+
+define host{
+  use       default-host
+  host_name <%= host['name'] %>
+  alias     <%= host['name'].split(/\./).first %>
+  address   <%= host['ip'] %>
+}
+
+<%-  %w[ load procs root_disk swap ].each do |service| %>
+define service{
+  use                 default-service
+  host_name           <%= host['name'] %>
+  service_description <%= service %>
+  check_command       check_nrpe!check_<%= service %>
+}
+
+<%- end %>
+
+<%- if host_classes.include?('web') %>
+  <%- %w[ apache varnishd varnishncsa ].each do |service| %>
+define service {
+  use                 default-service
+  host_name           <%= host['name'] %>
+  service_description <%= service %>
+  check_command       check_nrpe!check_<%= service %>
+}
+  <%- end %>
+<%- end %>
+
+define service{
+  use                 default-service
+  host_name           <%= host['name'] %>
+  service_description ping
+  check_command       check_ping!250.0,20%!500.0,60%d
+}
+
+define service{
+  use                 default-service
+  host_name           <%= host['name'] %>
+  service_description SSH
+  check_command       check_ssh
+}
+
+<%- if host_classes.include?('mysql::server') %>
+define service {
+  use                 default-service
+  host_name           <%= host['name'] %>
+  service_description MySQL
+  check_command       check_nrpe!check_mysql
+}
+<%- end %>

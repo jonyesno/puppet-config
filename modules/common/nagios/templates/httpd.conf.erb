@@ -1,0 +1,39 @@
+<VirtualHost *:80>
+  ServerName nagios.<%= domain %>
+  RewriteEngine On
+  RewriteRule ^/(.*) https://%{HTTP_HOST}/$1 [L,R=301]
+</VirtualHost>
+
+<VirtualHost *:443>
+  ServerName nagios.<%= domain %>
+  ScriptAlias /cgi-bin/ "/usr/lib64/nagios/cgi-bin/"
+
+  SSLEngine On
+  SSLCertificateFile   /etc/httpd/ssl/star.<%= domain %>.pem
+  SSLCACertificateFile /etc/httpd/ssl/ca.pem
+
+  <Directory "/usr/lib64/nagios/cgi-bin/">
+     Options ExecCGI
+     AllowOverride None
+     Order allow,deny
+     Allow from all
+     AuthName "Nagios Access"
+     AuthType Basic
+     AuthUserFile /etc/httpd/auth/nagios
+     Require valid-user
+  </Directory>
+
+  DocumentRoot /usr/share/nagios/html
+
+  <Directory "/usr/share/nagios/html">
+     Options None
+     AllowOverride None
+     Order allow,deny
+     Allow from all
+     AuthName "Nagios Access"
+     AuthType Basic
+     AuthUserFile /etc/httpd/auth/nagios
+     Require valid-user
+  </Directory>
+</VirtualHost>
+

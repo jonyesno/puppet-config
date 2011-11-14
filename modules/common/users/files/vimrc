@@ -1,0 +1,40 @@
+set nocompatible " duh!
+set shiftwidth=2
+set bs=2 " allow backspacing in insert mode
+set tabstop=2
+set autoindent
+set smartindent
+set expandtab
+set smarttab
+set number
+set nowrap
+set encoding=utf8
+set fileencoding=utf8
+set autoread " read files that have changed on disk but not in vim automatically
+set autowrite " save
+set autowriteall " always
+set incsearch " incremental search
+set showmatch " show matching [{(
+set hlsearch
+set ignorecase
+set smartcase
+set hidden " don't need to save buffers when putting them in the background
+set history=1000
+set wildmenu
+set wildmode=list:longest
+set title
+set scrolloff=3
+set backupdir=~/tmp,/var/tmp,/tmp
+set directory=~/tmp,/var/tmp,/tmp
+
+" faster updatetime for taglist
+set updatetime=1000
+set showcmd      " display incomplete commands
+set nostartofline           " Avoid moving cursor to BOL when jumping around
+set virtualedit=block       " Let cursor move past the last char in <C-v> mode
+set lazyredraw
+
+filetype on
+filetype indent on
+filetype plugin on
+syntax on

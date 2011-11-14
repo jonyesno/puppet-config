@@ -1,0 +1,5 @@
+#!/bin/sh
+# limits lifted from varnish's sysconfig
+ulimit -l 82000
+ulimit -n 131072
+exec /usr/sbin/varnishd -P /var/run/varnish.pid -a :80 -T 127.0.0.1:6082 -f /etc/varnish/local.vcl -u varnish -g varnish -S /etc/varnish/secret -s file,/var/lib/varnish/varnish_storage.bin,<%= varnish['size'] %> -F 2>&1

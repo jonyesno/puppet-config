@@ -1,0 +1,5 @@
+define hostgroup{
+  hostgroup_name <%= environment %>
+  alias          <%= environment %>
+  members        <%= hosts.map { |h| h['name'] }.join(",") %>
+}

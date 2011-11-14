@@ -1,0 +1,37 @@
+*filter
+:INPUT ACCEPT   [0:0]
+:FORWARD ACCEPT [0:0]
+:OUTPUT ACCEPT  [0:0]
+:PP-INPUT -     [0:0]
+
+-A INPUT   -j PP-INPUT
+-A FORWARD -j PP-INPUT
+
+-A PP-INPUT -i lo -j ACCEPT
+-A PP-INPUT -p icmp --icmp-type any -j ACCEPT
+-A PP-INPUT -m state --state ESTABLISHED,RELATED -j ACCEPT
+-A PP-INPUT -m state --state NEW -m tcp -p tcp --dport 22 -j ACCEPT
+<%- if classes.include?('apache') %>
+-A PP-INPUT -m state --state NEW -m tcp -p tcp --dport 80    -j ACCEPT
+-A PP-INPUT -m state --state NEW -m tcp -p tcp --dport 443   -j ACCEPT
+-A PP-INPUT -m state --state NEW -m tcp -p tcp --dport 8080  -j ACCEPT
+<%- end %>
+<%- if classes.include?('mysql::server') %>
+<%- servers.each do |server| %>
+# MySQL
+-A PP-INPUT -m state --state NEW -m tcp -p tcp --dport 3306 -s <%= server['ip'] %> -j ACCEPT
+<%- end %>
+<%- end %>
+# Munin
+-A PP-INPUT -m state --state NEW -m tcp -p tcp --dport 4949 -s <%= ipaddress_manage %> -j ACCEPT
+# NRPE
+-A PP-INPUT -m state --state NEW -m tcp -p tcp --dport 5666 -s <%= ipaddress_manage %> -j ACCEPT
+<%- if classes.include?('puppetmaster') %>
+<%- servers.each do |server| %>
+-A PP-INPUT -m state --state NEW -m tcp -p tcp --dport 8140 -s <%= server['ip'] %> -j ACCEPT
+<%- end %>
+<%- end %>
+-A PP-INPUT -j REJECT -p tcp --reject-with tcp-reset
+-A PP-INPUT -j REJECT -p udp --reject-with icmp-port-unreachable
+-A PP-INPUT -j REJECT        --reject-with icmp-proto-unreachable
+COMMIT

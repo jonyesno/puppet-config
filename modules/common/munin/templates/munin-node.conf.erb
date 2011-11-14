@@ -1,0 +1,29 @@
+log_level 4
+log_file /var/log/munin/munin-node.log
+pid_file /var/run/munin/munin-node.pid
+
+tls disabled
+
+background 1
+setsid 1
+
+user root
+group root
+
+# Regexps for files to ignore
+
+ignore_file ~$
+ignore_file DEADJOE$
+ignore_file \.bak$
+ignore_file %$
+ignore_file \.dpkg-(tmp|new|old|dist)$
+ignore_file \.rpm(save|new)$
+ignore_file \.pod$
+
+allow ^127\.0\.0\.1$
+allow <%= ipaddress_manage %>
+allow <%= ipaddress_eth0 %>
+
+host <%= ipaddress_eth0 %>
+port 4949
+

@@ -1,0 +1,6 @@
+127.0.0.1   localhost localhost.localdomain localhost4 localhost4.localdomain4 
+::1         localhost localhost.localdomain localhost6 localhost6.localdomain6
+<%- servers.each do |server| %>
+<%= "#{server['ip'].ljust(16)} #{server['name']} #{server['name'].split(/\./).first} "%>
+<%- end %>
+<%= ipaddress_manage %>     puppet

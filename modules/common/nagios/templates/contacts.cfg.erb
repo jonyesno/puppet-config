@@ -1,0 +1,15 @@
+<%- nagios['contacts'].each do |contact| %>
+define contact{
+  contact_name <%= contact['name'] %>
+  alias        <%= contact['name'] %>
+  use          generic-contact
+  email        <%= contact['email'] %>
+}
+<% end %>
+
+define contactgroup{
+  contactgroup_name default
+  alias             default
+  members           <%= nagios['contacts'].map { |c| c['name'] }.join(',') %>
+} 
+

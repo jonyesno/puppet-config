@@ -1,0 +1,10 @@
+/var/log/varnish/*.log {
+    daily
+    missingok
+    notifempty
+    sharedscripts
+    delaycompress
+    postrotate
+        sv hup /var/service/varnishncsa
+    endscript
+}
