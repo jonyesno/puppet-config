@@ -1,0 +1,13 @@
+---
+classes:
+- firewall
+- puppet
+- mail
+- munin::node
+- nagios::client
+- net
+- repos
+- runit
+- ssh
+- time
+- users

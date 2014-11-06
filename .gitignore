@@ -1,2 +1,4 @@
 library
 .tmp
+systems.yaml
+hiera/*/*.yaml

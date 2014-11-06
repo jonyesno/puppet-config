@@ -1,0 +1,14 @@
+---
+ipaddress_manage: 10.0.0.1
+servers:
+- { name: manage01.example.com,   ip: 10.0.0.1 }
+nagios:
+contacts:
+  - name:  Jon Stuart
+    email: jon@zomo.co.uk
+varnish:
+  size: 64M
+apache:
+  servers: 12
+  http_listener: 80
+certs: [ star.example.com ]

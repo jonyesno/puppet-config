@@ -1,0 +1,10 @@
+---
+:backends:
+  - yaml
+:yaml:
+  :datadir: /root/puppet/hiera
+:hierarchy:
+  - "systems/%{::fqdn}"
+  - "profiles/%{::profile}"
+  - "environments/%{::environment}"
+  - "base/standard"

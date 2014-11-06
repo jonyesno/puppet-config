@@ -1,0 +1,8 @@
+---
+classes:
+- apache
+- build
+- munin::server
+- nagios::server
+- puppetmaster
+- users::build
