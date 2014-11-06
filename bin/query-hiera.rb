@@ -6,7 +6,7 @@ require 'pp'
 base = File.dirname(__FILE__) + '/..'
 systems_yml = "#{base}/systems.yaml"
 hiera_yml   = "#{base}/hiera.yaml"
-raise RuntimeError, "cant't find systems config at #{systems_yml}" unless File.exists?(systems_yml)
+raise RuntimeError, "can not find systems config at #{systems_yml}" unless File.exists?(systems_yml)
 
 system = ARGV.shift
 key    = ARGV.shift
