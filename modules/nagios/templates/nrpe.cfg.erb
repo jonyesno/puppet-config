@@ -1,10 +1,10 @@
 log_facility=daemon
 pid_file=/var/run/nrpe.pid
 server_port=5666
-server_address=<%= ipaddress_eth0 %>
+server_address=<%= @interface %>
 nrpe_user=nagios
 nrpe_group=nagios
-allowed_hosts=<%= ipaddress_manage %>
+allowed_hosts=<%= @manage %>
 
 dont_blame_nrpe=0
 # command_prefix=/usr/bin/sudo
@@ -20,7 +20,7 @@ command[check_swap]=/usr/lib64/nagios/plugins/check_swap -w 20 -c 10
 command[check_mysql]=/usr/lib64/nagios/plugins/check_mysql
 command[check_procs]=/usr/lib64/nagios/plugins/check_procs -w 250 -c 400 -s RSZDT
 command[check_root_disk]=/usr/lib64/nagios/plugins/check_disk -w 20% -c 10% -M /
-<%- if classes.include?('apache') %>
+<%- if @apache %>
 command[check_apache]=/usr/lib64/nagios/plugins/check_procs -c 1:<%= apache['servers'] + 2 %> -C httpd
 <%- end %>
 command[check_varnishd]=/usr/lib64/nagios/plugins/check_procs -c 2:2 -C varnishd
