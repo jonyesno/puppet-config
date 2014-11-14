@@ -1,5 +1,5 @@
 class net::hosts {
-  $puppetmaster_ip = hiera('ipaddress_manage')
+  $puppetmaster_ip = hiera('managehost')
   file { '/etc/hosts':
     owner   => root,
     group   => root,

@@ -1,5 +1,5 @@
 ---
-ipaddress_manage: 10.0.0.1
+managehost: 10.0.0.1
 servers:
 - { name: manage01.example.com,   ip: 10.0.0.1 }
 nagios:
