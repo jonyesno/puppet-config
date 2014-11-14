@@ -1,12 +1,12 @@
 log_facility=daemon
 pid_file=/var/run/nrpe.pid
 server_port=5666
-server_address=<%= @interface %>
+server_address=<%= @ipaddress %>
 nrpe_user=nagios
 nrpe_group=nagios
-allowed_hosts=<%= @manage %>
+allowed_hosts=<%= @monitor_ip %>
 
-dont_blame_nrpe=0
+dont_blame_nrpe=1
 # command_prefix=/usr/bin/sudo
 
 debug=0
@@ -15,13 +15,16 @@ connection_timeout=300
 
 #allow_weak_random_seed=1
 
-command[check_load]=/usr/lib64/nagios/plugins/check_load -w 15,10,5 -c 30,25,20
-command[check_swap]=/usr/lib64/nagios/plugins/check_swap -w 20 -c 10
-command[check_mysql]=/usr/lib64/nagios/plugins/check_mysql
-command[check_procs]=/usr/lib64/nagios/plugins/check_procs -w 250 -c 400 -s RSZDT
+command[check_apache]=/usr/lib64/nagios/plugins/check_procs -C httpd -c 8:
+command[check_cron_daemon]=/usr/lib64/nagios/plugins/check_procs -C crond -c 1:
+command[check_heartbeat]=/usr/lib64/nagios/plugins/check_procs -c4: -C heartbeat
+command[check_load]=/usr/lib64/nagios/plugins/check_load -w 15,10,8 -c 30,25,20
+command[check_memcached]=/data/system/nagios/check_memcached_local
+command[check_mysql]=/usr/bin/sudo -H /usr/lib64/nagios/plugins/check_mysql
+command[check_mysql_with_slave]=/usr/bin/sudo -H /usr/lib64/nagios/plugins/check_mysql -S
+command[check_nginx]=/usr/lib64/nagios/plugins/check_procs -c2: -C nginx
+command[check_pound]=/usr/lib64/nagios/plugins/check_procs -c2: -C pound
 command[check_root_disk]=/usr/lib64/nagios/plugins/check_disk -w 20% -c 10% -M /
-<%- if @apache %>
-command[check_apache]=/usr/lib64/nagios/plugins/check_procs -c 1:<%= apache['servers'] + 2 %> -C httpd
-<%- end %>
-command[check_varnishd]=/usr/lib64/nagios/plugins/check_procs -c 2:2 -C varnishd
-command[check_varnishncsa]=/usr/lib64/nagios/plugins/check_procs -c 1:1 -C varnishncsa
+command[check_smtp]=/usr/lib64/nagios/plugins/check_smtp -H 127.0.0.1
+command[check_varnish]=/usr/lib64/nagios/plugins/check_procs -C varnishd -c 2:2
+command[check_varnishncsa]=/usr/lib64/nagios/plugins/check_procs -C varnishncsa -c 1:1

@@ -1,4 +1,4 @@
-<%- nagios['contacts'].each do |contact| %>
+<%- @nagios['contacts'].each do |contact| %>
 define contact{
   contact_name <%= contact['name'] %>
   alias        <%= contact['name'] %>
@@ -10,6 +10,6 @@ define contact{
 define contactgroup{
   contactgroup_name default
   alias             default
-  members           <%= nagios['contacts'].map { |c| c['name'] }.join(',') %>
-} 
+  members           <%= @nagios['contacts'].map { |c| c['name'] }.join(',') %>
+}
 
