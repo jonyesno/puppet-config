@@ -1,5 +1,6 @@
 ---
 classes:
+- base
 - firewall
 - puppet
 - mail
