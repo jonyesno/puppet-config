@@ -2,9 +2,9 @@
 #
 # Installs, configures, runs Apache
 
-class apache($http = true) {
+class apache {
   include apache::auth
-  class { 'apache::config': http => $http }
+  include apache::config
   include apache::directories
   include apache::packages
   include apache::services

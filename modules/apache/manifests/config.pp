@@ -1,4 +1,8 @@
-class apache::config($http = true, $children = 8) {
+class apache::config($port80 = true, $children = 8) {
+  if (defined(Class['::varnish'])) {
+    $varnish = true
+  }
+
   file { '/etc/httpd/conf/httpd.conf':
     owner   => root,
     group   => root,
