@@ -4,9 +4,8 @@
 
 class base {
   include base::cabundle
-  include base::config
   include base::directories
-  include base::ipmi
   include base::packages
   include base::services
+  include base::sysctl
 }
