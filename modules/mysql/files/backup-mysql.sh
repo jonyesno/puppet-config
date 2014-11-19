@@ -11,16 +11,16 @@ trace() {
 }
 
 STAMP=$( date '+%Y%m%d-%H%M%S' )
-TOP=/var/lib/mysql-backup
+TOP=/var/lib/backup/mysql
 ROOT="${TOP}/${STAMP}"
 mkdir -p ${ROOT} || fail "couldn't create ${ROOT}"
 
 cd ${ROOT}
 
-DBS=$( mysql --batch -e 'show databases' | grep -v '_schema$' )
+DBS=$( mysql --batch --skip-column-names --execute 'show databases' | grep -v '_schema$' )
 
 trace "starting at $( date )"
-for DB in ${DBS} ; do 
+for DB in ${DBS} ; do
   OUT="${ROOT}/${DB}.sql.gz"
   trace "dumping ${DB} to ${OUT} at $( date )"
   mysqldump --quick --skip-lock-tables ${DB} | gzip -c > ${OUT}
