@@ -1,0 +1,25 @@
+[main]
+    logdir = /var/log/puppet
+    rundir = /var/run/puppet
+    ssldir = $vardir/ssl
+
+    pluginsync = true
+
+[agent]
+    classfile   = $vardir/classes.txt
+    localconfig = $vardir/localconfig
+    report      = true
+
+[master]
+    autosign  = false
+<% if @puppetmaster_report -%>
+    reports   = store, http
+    reporturl = <%= @puppetmaster_report -%>
+    storeconfigs = true
+    storeconfigs_backend = puppetdb
+<% else -%>
+    reports   = store
+<% end -%>
+    external_nodes = /etc/puppet/bin/puppet-enc.rb
+    node_terminus = exec
+
