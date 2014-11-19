@@ -6,8 +6,10 @@ classes:
 - mail
 - nagios::client
 - net
+- ntp
 - repos
-- runit
 - ssh
-- time
+- ssl
+- ssl::certificate::ca
+- timezone::utc
 - users
