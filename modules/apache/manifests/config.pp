@@ -7,14 +7,6 @@ class apache::config($http = true, $children = 8) {
     require => Class['apache::packages'],
     notify  => Service['httpd'],
   }
-  file { '/etc/httpd/conf.d/nvh.conf':
-    owner   => root,
-    group   => root,
-    mode    => '0644',
-    source  => 'puppet:///modules/apache/nvh.conf',
-    require => Class['apache::packages'],
-    notify  => Service['httpd'],
-  }
   file { '/etc/httpd/conf.d/ssl.conf':
     owner   => root,
     group   => root,
