@@ -1,10 +1,4 @@
 class varnish::services {
-
-  $varnish = hiera('varnish')
-  runit::runner { 'varnish': vars => $varnish }
-  runit::runner { 'varnishncsa': }
-  runit::runner { 'varnishlog': }
-
   puppet::externalfact { 'varnish': }
 
   service { 'varnish':
