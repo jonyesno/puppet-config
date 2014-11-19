@@ -1,10 +1,9 @@
-<VirtualHost <%= apache['http_listener'] %>>
-  ServerName localhost
-  <Location /server-status>
-      SetHandler server-status
-      Order deny,allow
-      Deny from all
-      Allow from 127.0.0.1
-      Allow from ::1
+Listen 127.0.0.1:8888
+<VirtualHost *:8888>
+  ServerName <%= @fqdn %>
+  ServerAlias localhost
+
+  <Location />
+    SetHandler server-status
   </Location>
 </VirtualHost>
