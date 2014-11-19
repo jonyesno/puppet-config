@@ -1,13 +1,8 @@
-class mail::packages {
-  package { "postfix":
-    ensure => absent,
-    require => Package["exim"],
-  }
-  package { "exim":
-    ensure  => present,
-  }
-}
-  
 class mail {
+  include mail::config
   include mail::packages
+  include mail::services
+
+  Class['mail::packages'] ~> Class['mail::config']
+  Class['mail::config']   ~> Class['mail::services']
 }

@@ -1,0 +1,7 @@
+/var/log/exim/*log {
+  daily
+  missingok
+  notifempty
+  delaycompress
+  rotate 30
+}
