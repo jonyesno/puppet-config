@@ -4,47 +4,32 @@ This is a skeleton set of [Puppet](http://puppetlabs.com/) manifests for
 bootstrapping a set of machines to do web-shaped things. It reflects my
 personal preferences for system layout and operation. It may not suit yours.
 
+This tree was overhauled in November 2014 to align with CentOS 7 systems and
+the considerable change in Puppet practise and style since 2011. There's likely
+still plenty of delinting to do.
+
 ## Manifest layout
 
 The manifests are generally written along the lines of @ripienaar's [Simple
 Puppet Module
 Structure](http://www.devco.net/archives/2009/09/28/simple_puppet_module_structure.php).
 
-## External Node Classifier
+## External Node Classifier and Hiera
 
-The script at <code>libexec/puppet-node.rb</code> is what Puppet calls an External Node
-Classifier. Puppet invokes this script with the target machine's hostname and
-receives a YAML response detailing the classes that should be applied to that
-host along with parameters used in the manifests and templates.
+The script at <code>bin/puppet-enc.rb</code> is what Puppet calls an External
+Node Classifier. Puppet invokes this script with the target machine's hostname,
+looks that up in <code>systems.yaml</code> and feeds that to Hiera to obtain
+class lists and system parameters for use in the manifests and templates.
 
-Here, puppet-node.rb consults two YAML files:
+A utility script <code>bin/query-hiera.rb</code> can be used to check Hiera
+lookups.
 
- *  <code>/etc/puppet/systems.yml</code>
- *  <code>/etc/puppet/profiles.yml</code>
+See [External Nodes](http://docs.puppetlabs.com/guides/external_nodes.html) and
+[Hiera](https://docs.puppetlabs.com/hiera/1/index.html) for more details.
 
-A server's entry in the systems file indicates its profile and provides the
-host's parameters. The server's profile is the list of Puppet classes that is
-uses. Both support a 'default' entry. For systems, the defaults are relative to
-the server's environment (eg: 'production'). Profile defaults apply to all
-systems.
-
-See [External Nodes](http://docs.puppetlabs.com/guides/external_nodes.html) for
-more details.
-
-## Explicit process management
-
-I tend to run services under explicit process management. These manifests run
-daemons such as varnishd and varnishncsa under
-[runit](http://smarden.org/runit/). Some daemons, such as Apache, aren't run
-under runit. This is admittedly inconsistent, but Apache has never got me out
-of the bed in the small hours for wholesale bombing out.
-
-## Passwords and other sensitive data
-
-Some simple passwords are present (eg: <code>nagios/files/passwd</code> for
-Nagios CGI).  Consider changing these.  Some related placeholders are just
-dummy files (eg: <code>apache/files/ca.pem</code> for <code>mod_ssl</code>).
-These need real data in them for services to run.
+Hiera is configured with the [<code>hiera-eyaml</code>
+backend](https://github.com/TomPoulton/hiera-eyaml) so that confidential
+information (eg: X509 keys) can be stored in the repository.
 
 ## Thanks
 
@@ -60,4 +45,4 @@ LICENSE for details.
 
 ## Author
 
-Jon Stuart, jon@zomo.co.uk, [Zomo Technology Ltd](http://www.zomo.co.uk), 2011.
+Jon Stuart, jon@zomo.co.uk, [Zomo Technology Ltd](http://www.zomo.co.uk), 2014.
