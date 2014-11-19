@@ -1,9 +1,13 @@
 class users::build {
-  local-user { 'build':
+  localuser { 'build':
     user     => 'build',
     comment  => 'package builder',
-    password => 'XXX',
     uid      => 1000,
     groups   => 'build'
   }
+
+  dotfile { [
+    'build:gitconfig',
+    'build:vimrc',
+    ]: }
 }

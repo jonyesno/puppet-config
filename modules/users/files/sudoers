@@ -1,3 +1,0 @@
-Defaults        env_keep += "SVN_SSH SSH_AUTH_SOCK"
-%wheel          ALL = (ALL) ALL 
-%wheel          ALL = NOPASSWD: /usr/sbin/puppetd *
