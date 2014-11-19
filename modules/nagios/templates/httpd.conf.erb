@@ -8,7 +8,7 @@
   ServerName  <%= @nagios['vh'] %>
 
   SSLEngine On
-  SSLCertificateFile   /etc/httpd/ssl/star.<%= @domain %>.pem
+  SSLCertificateFile   /etc/ssl/local/star.<%= @domain %>.pem
   # SSLCACertificateFile /etc/httpd/ssl/ca.pem
 
   DocumentRoot /usr/share/nagios/html

@@ -1,0 +1,6 @@
+---
+x509certificates:
+  ca: >
+    ENC[PKCS7, ... ]
+  star.example.com: >
+    ENC[PKCS7, ... ]

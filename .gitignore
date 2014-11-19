@@ -1,4 +1,6 @@
-library
 .tmp
-systems.yaml
 hiera/*/*.yaml
+hiera/*/*.eyaml
+library
+keys
+systems.yaml

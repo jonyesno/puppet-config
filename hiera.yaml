@@ -1,8 +1,13 @@
 ---
 :backends:
-  - yaml
+- yaml
+- eyaml
 :yaml:
   :datadir: /root/puppet/hiera
+:eyaml:
+  :datadir: /root/puppet/hiera
+  :pkcs7_private_key: /root/puppet/keys/private_key.pkcs7.pem
+  :pkcs7_public_key: /root/puppet/keys/public_key.pkcs7.pem
 :hierarchy:
   - "systems/%{::fqdn}"
   - "profiles/%{::profile}"

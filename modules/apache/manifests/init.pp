@@ -10,8 +10,8 @@ class apache($http = true) {
   include apache::services
   include nagios::check::apache
 
-  $certs = hiera_array('certs', [])
-  apache::certs { $certs: }
+  $certs = hiera_array('certificates', [])
+  ssl::certificate { $certs: group => 'apache' }
 
   Class['apache::directories'] -> Class['apache::services']
 }
