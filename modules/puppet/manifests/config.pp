@@ -1,5 +1,4 @@
 class puppet::config {
-
   if (defined(Class['::puppetmaster'])) {
     $template = 'puppet/puppetmaster.conf.erb'
     $puppetmaster_report = hiera('puppetmaster_report', false)

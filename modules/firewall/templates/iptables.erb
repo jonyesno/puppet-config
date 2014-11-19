@@ -10,26 +10,26 @@
 -A LOCAL-INPUT -p icmp --icmp-type any -j ACCEPT
 -A LOCAL-INPUT -m state --state ESTABLISHED,RELATED -j ACCEPT
 -A LOCAL-INPUT -m state --state NEW -m tcp -p tcp --dport 22 -j ACCEPT
-<%- if @apache %>
+<% if @apache -%>
 -A LOCAL-INPUT -m state --state NEW -m tcp -p tcp --dport 80    -j ACCEPT
 -A LOCAL-INPUT -m state --state NEW -m tcp -p tcp --dport 443   -j ACCEPT
 -A LOCAL-INPUT -m state --state NEW -m tcp -p tcp --dport 8080  -j ACCEPT
-<%- end %>
-<%- if @mysql %>
-<%- @servers.each do |server| %>
+<% end -%>
+<% if @mysql -%>
+<% @servers.each do |server| -%>
 # MySQL
 -A LOCAL-INPUT -m state --state NEW -m tcp -p tcp --dport 3306 -s <%= server['ip'] %> -j ACCEPT
-<%- end %>
-<%- end %>
+<% end -%>
+<% end -%>
 # Munin
 -A LOCAL-INPUT -m state --state NEW -m tcp -p tcp --dport 4949 -s <%= @manage %> -j ACCEPT
 # NRPE
 -A LOCAL-INPUT -m state --state NEW -m tcp -p tcp --dport 5666 -s <%= @manage %> -j ACCEPT
-<%- if @puppetmaster %>
-<%- @servers.each do |server| %>
+<% if @puppetmaster -%>
+<% @servers.each do |server| -%>
 -A LOCAL-INPUT -m state --state NEW -m tcp -p tcp --dport 8140 -s <%= server['ip'] %> -j ACCEPT
-<%- end %>
-<%- end %>
+<% end -%>
+<% end -%>
 -A LOCAL-INPUT -j REJECT -p tcp --reject-with tcp-reset
 -A LOCAL-INPUT -j REJECT -p udp --reject-with icmp-port-unreachable
 -A LOCAL-INPUT -j REJECT        --reject-with icmp-proto-unreachable
