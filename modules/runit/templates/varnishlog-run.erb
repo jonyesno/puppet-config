@@ -1,0 +1,2 @@
+#!/bin/sh
+exec chpst -u nobody:nobody /usr/bin/varnishlog | grep -e 'health' 2>&1
